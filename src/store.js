@@ -6,10 +6,13 @@ var state ={
   count:10
 };
 
-const mutations={
+const mutations={  //处理数据
   increment(state){
     state.count++;
-  }
+  },
+  decrement(state){
+    state.count--;
+  },
 };
 
 const actions={
@@ -17,12 +20,31 @@ const actions={
     commit
   })=>{
     commit('increment')
+  },
+  decrement:({commit})=>{
+    commit('decrement')
+  },
+  clickOdd:({commit,state})=>{
+    if(state.count%2===0){
+      commit('increment')
+    }
+  },
+  clickAsync:({commit})=>{
+    new Promise((resolve)=>{
+      setTimeout(function () {
+        commit('increment');
+        resolve();
+      },1000)
+    })
   }
 };
 
 const getters={
   count(state){
     return state.count;
+  },
+  getOdd(state){
+    return state.count%2==0 ?'偶数':'奇数';
   }
 }
 
